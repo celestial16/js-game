@@ -1,0 +1,876 @@
+/* Given Code (Credit Thomas Butler (2021)*/
+/*Code may have been slightly edited to fit purpose needed*/
+
+/* Import website font */
+@import url('https://stockfont.org/?8cda42869f3be483afe7bb6ec5a60b380d392a4ba18fcca04cba6299745fbe8c');
+
+body {
+	background-image: url(images/bg.png);
+	margin: 0;
+	padding: 0;
+	font-family: 'Oxygen-Regular', sans-serif;
+	overflow: hidden;
+}
+
+.sky {
+	position: absolute;
+	width: 100vw;
+	height: 70vh;
+	left: 0;
+	top: 0;
+	background-color: skyblue;
+	background-position: bottom left;
+	background-image: url("images/stars.gif");
+}
+
+aside {
+	width: 200px;
+	position: fixed;
+	height: 100vh;
+	left: 100%;
+	margin-left: -240px;
+	background-color: #ddd;
+	border-left: 5px solid #bbb;
+	padding: 20px;
+}
+
+.character {
+	position: absolute;
+	top: 88vh;
+	left: 200px;
+	display: block;
+}
+
+.character .body {
+	width: 32px;
+	height: 32px;
+	background-image: url(images/body2.png);
+	background-position: 64px 0px;
+	margin-top: 14px;
+}
+
+.character .head {
+	width: 32px;
+	height: 32px;
+	background-image: url(images/head0.png);
+	margin-bottom: 0;
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: 0px -64px;
+}
+
+aside ul {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+	margin-bottom: 20px;
+	overflow: auto;
+}
+
+.heads li,
+.bodies li {
+	width: 32px;
+	height: 32px;
+	background-position: 0 -64px;
+	float: left;
+	cursor: pointer;
+	border: 2px solid #ddd;
+	margin-right: 4px;
+}
+
+.bodies li {
+	background-position: 64px 0px;
+}
+
+.bomb {
+	background-image: url(images/sprites.png);
+	width: 31px;
+	height: 10px;
+	left: 0px;
+	position: absolute;
+	background-position: -96px -401px;
+	transform: rotate(90deg);
+}
+
+#alien {background-image: url(images/alien.png); position: absolute; height: 100px; width: 100px; background-size: cover; top: 15vh; left: 45%;}
+
+
+#start:before {
+	background-image: url(images/head0.png);
+	background-repeat: no-repeat;
+	background-position: 0px -64px;
+	width: 32px;
+	height: 32px;
+	content: " ";
+	display: block;
+	position: absolute;
+	margin-top: 0.4em;
+	margin-left: 0.4em;
+}
+
+#start {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	position: absolute;
+	font-size: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20vw;
+	background-color: #ccc;
+	z-index: 1000;
+	text-align: center;
+	left: 50%;
+	margin-left: -10vw;
+	top: 50%;
+	margin-top: -1em;
+	font-family: 'Anton';
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: 4px 4px 4px #000;
+}
+
+.explosion {
+	width: 1px;
+	height: 1px;
+	position: absolute;
+	/*border: blue 2px solid; /*Remove comment to test collision box for explosion */
+}
+
+.explosion:before {
+	z-index: 999;
+	width: 128px;
+	height: 32px;
+	display: block;
+	content: " ";
+	background-image: url(images/bomb1.png);
+	background-position: 0 -192px;
+	animation: bombH 0.5s steps(1) infinite;
+}
+
+.explosion:after {
+	z-index: 999;
+	width: 32px;
+	height: 160px;
+	display: block;
+	content: " ";
+	margin-top: -100px;
+	margin-left: 48px;
+	background-image: url(images/bomb1.png);
+	background-position: 0px -32px;
+	animation: bombV 0.5s steps(1) infinite;
+}
+
+.explosion2 {
+	width: 128px;
+	height: 160px;
+	position: absolute;
+	margin-left: -50px;
+	margin-top: 0px;
+}
+
+.explosion2:before {
+	z-index: 999;
+	width: 128px;
+	height: 32px;
+	display: block;
+	content: " ";
+	background-image: url(images/bomb2.png);
+	background-position: 0 -192px;
+	animation: bombH 0.5s steps(1) infinite;
+}
+
+.explosion2:after {
+	z-index: 999;
+	width: 32px;
+	height: 160px;
+	display: block;
+	content: " ";
+	margin-top: -100px;
+	margin-left: 48px;
+	background-image: url(images/bomb2.png);
+	background-position: 0px -32px;
+	animation: bombV 0.5s steps(1) infinite;
+
+}
+
+@keyframes bombV {
+
+	0%,
+	100% {
+		background-position: 32px -32px;
+	}
+
+	12.5%,
+	87.5% {
+		background-position: 64px -32px;
+	}
+
+	25%,
+	75% {
+		background-position: 96px -32px;
+	}
+
+	37.5%,
+	62.5% {
+		background-position: 0 -32px;
+	}
+}
+
+@keyframes bombH {
+
+	0%,
+	100% {
+		background-position: 0 -288px;
+	}
+
+	12.5%,
+	87.5% {
+		background-position: 0 -256px;
+	}
+
+	25%,
+	75% {
+		background-position: 0 -224px;
+	}
+
+	37.5%,
+	62.5% {
+		background-position: 0 -224px;
+	}
+}
+
+.character.stand.up .head {
+	background-position: 0px 0px;
+}
+
+.character.stand.down .head {
+	background-position: 0px -64px;
+}
+
+.character.stand.left .head {
+	background-position: 0px -32px;
+}
+
+.character.stand.right .head {
+	background-position: 0px -96px;
+}
+
+.character.stand.up .body {
+	background-position: 0px 0px;
+}
+
+.character.stand.down .body {
+	background-position: -64px 0px;
+}
+
+.character.stand.left .body {
+	background-position: -32px 0px;
+}
+
+.character.stand.right .body {
+	background-position: -96px 0px;
+}
+
+.character.walk.up .head {
+	background-position: 0px 0px;
+	animation: headbob 0.5s infinite;
+}
+
+.character.walk.up .body {
+	animation: walkup 1s steps(3) infinite;
+}
+
+.character.walk.down .head {
+	background-position: 0px -64px;
+	animation: headbob 0.75s infinite;
+}
+
+.character.walk.down .body {
+	animation: walkdown 1s steps(3) infinite;
+}
+
+.character.walk.left .head {
+	background-position: 0px -32px;
+	margin-top: -3px;
+	margin-left: -2px;
+	animation: headbob2 0.75s infinite;
+}
+
+.character.walk.left .body {
+	animation: walkleft 1s steps(3) infinite;
+}
+
+@keyframes walkleft {
+
+	0%,
+	100% {
+		background-position: -32px -32px;
+	}
+
+	50% {
+		background-position: -32px -128px;
+	}
+}
+
+.character.walk.right .head {
+	background-position: 0px -96px;
+	margin-top: -3px;
+	margin-left: 4px;
+	animation: headbob3 0.75s infinite;
+}
+
+.character.walk.right .body {
+	animation: walkright 1s steps(3) infinite;
+}
+
+@keyframes walkright {
+
+	0%,
+	100% {
+		background-position: -96px -32px;
+	}
+
+	50% {
+		background-position: -96px -128px;
+	}
+}
+
+@keyframes walkup {
+
+	0%,
+	100% {
+		background-position: 0px -32px;
+	}
+
+	50% {
+		background-position: 0px -128px;
+	}
+}
+
+
+@keyframes walkdown {
+
+	0%,
+	100% {
+		background-position: -64px -32px;
+	}
+
+	50% {
+		background-position: -64px -128px;
+	}
+}
+
+@keyframes headbob {
+
+	0%,
+	100% {
+		margin-top: 0px;
+	}
+
+	50% {
+		margin-top: 1px;
+	}
+}
+
+@keyframes headbob2 {
+
+	0%,
+	100% {
+		margin-left: -2px;
+	}
+
+	50% {
+		margin-left: 0px;
+	}
+}
+
+@keyframes headbob3 {
+
+	0%,
+	100% {
+		margin-left: 2px;
+	}
+
+	50% {
+		margin-left: 0px;
+	}
+}
+
+@keyframes fadeout {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+.character.dead .body {
+	animation: dead 1s steps(1) forwards;
+
+}
+
+.character.dead .body:after {
+	background-image: inherit;
+	content: "";
+	width: 32px;
+	height: 32px;
+	display: block;
+	background-position: 0px -480px;
+	margin-top: -12px;
+	position: absolute;
+	animation: deadarms 1s steps(1) forwards;
+}
+
+.character.stand.dead .head {
+	animation: deadhead 1s steps(1) forwards;
+}
+
+.character.hit.left .body {
+	animation: hitleft 0.2s steps(1) forwards;
+}
+
+.character.hit.left .head {
+	background-position: 0px -432px;
+}
+
+.character.hit.right .head {
+	background-position: 0px -496px;
+}
+
+.character.hit.right .body {
+	background-position: -96px -160px;
+	margin-left: -3px;
+}
+
+.character.hit.up .head {
+	background-position: 0px 0px;
+}
+
+.character.hit.up .body {
+	background-position: -128px -160px;
+	margin-top: 16px;
+}
+
+.character.hit.down .head {
+	background-position: 0px -464px;
+}
+
+.character.hit.down .body {
+	background-position: -64px -160px;
+	margin-top: 22px;
+}
+
+@keyframes hitleft {
+
+	0%,
+	100% {
+		background-position: -32px -160px;
+	}
+}
+
+@keyframes dead {
+	0% {
+		background-position: 0px -512px;
+	}
+
+	25% {
+		background-position: -32px -512px;
+	}
+
+	50% {
+		background-position: -64px -512px;
+	}
+
+	75% {
+		background-position: -96px -512px;
+	}
+
+	100% {
+		background-position: -32px -678px;
+		width: 64px;
+	}
+}
+
+@keyframes deadhead {
+	0% {
+		background-position: 0px 0px;
+	}
+
+	25% {
+		background-position: 0px -432px;
+		margin-top: -2px;
+	}
+
+	50% {
+		background-position: 0px -464px;
+		margin-top: -2px
+	}
+
+	75% {
+		background-position: 0px -496px;
+	}
+
+	100% {
+		background-position: 0px -528px;
+		margin-top: 4px;
+		margin-left: 16px;
+	}
+}
+
+
+@keyframes deadarms {
+	0% {
+		background-position: 0px -480px;
+	}
+
+	25% {
+		background-position: -32px -480px;
+	}
+
+	50% {
+		background-position: -64px -480px;
+	}
+
+	75% {
+		background-position: -96px -480px;
+	}
+
+	100% {
+		display: none;
+		opacity: 0;
+	}
+}
+
+.lifeline {
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
+
+ul {
+	list-style-type: none;
+	float: right;
+	margin-right: 20px;
+}
+
+.health li {
+	width: 40px;
+	height: 48px;
+	background-image: url(images/state.png);
+	float: right;
+	margin-left: 8px;
+}
+
+
+.level {
+	border-collapse: collapse;
+}
+
+.editor {
+	width: 2048px;
+}
+
+.scroll {
+	width: 100vh;
+	overflow-x: scroll;
+	height: 512;
+}
+
+/*My Code Emily Fletcher 18410839 */
+.grassCollisionLine {
+	top: 90vh;
+	width: 100%;
+	height: 10px;
+	position: absolute;
+	/*background-color: red; /*comment out to see collision grass testing caution flashing colours */
+}
+
+.bottomCollisionLine {
+	top: 98.5vh;
+	width: 100%;
+	height: 10px;
+	position: absolute;
+	/*background-color: red; /*comment out to see collision grass testing */
+}
+
+#start:hover {
+                background-color: brown;
+}
+
+#reset {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	position: absolute;
+	font-size: 1.4em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20vw;
+	background-color: #ccc;
+	z-index: 1000;
+	text-align: center;
+	left: 50%;
+	margin-left: -10vw;
+	top: 50%;
+	margin-top: -1em;
+	font-family: 'Anton';
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: 4px 4px 4px #000;
+	display: none;
+}
+
+/* #reset:hover {
+	border: grey 4px solid;
+} */
+
+#scoreBoardButton {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	position: absolute;
+	font-size: 1.4em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20vw;
+	background-color: #ccc;
+	z-index: 1000;
+	text-align: center;
+	left: 50%;
+	margin-left: -10vw;
+	top: 65%;
+	margin-top: -1em;
+	font-family: 'Anton';
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: 4px 4px 4px #000;
+	display: none;
+}
+
+/* #scoreBoardButton:hover {
+	border: grey 4px solid;
+} */
+
+#scoreBoard {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	position: absolute;
+	font-size: 1.4em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+	height: 30vh;
+	background-color:aqua;
+	z-index: 1000;
+	text-align: center;
+	left: 30%;
+	top: 50%;
+	margin-top: -1em;
+	border-radius: 20px;
+	
+	font-family: 'Anton';
+	box-shadow: 4px 4px 4px #000;
+	list-style: none;
+	display: none;
+} 
+
+
+#goBackButton {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	position: absolute;
+	font-size: 1.4em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20vw;
+	background-color:aqua;
+	z-index: 1000;
+	text-align: center;
+	left: 50%;
+	margin-left: -10vw;
+	top: 85%;
+	opacity: 80%;
+	margin-top: -1em;
+	font-family: 'Anton';
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: 4px 4px 4px #000;
+	display: none;
+}
+
+#goBackButton:hover {
+                        background-color: brown;
+}
+
+#gameover {
+	background-image: url('loose.gif');
+	color: white;
+	text-shadow: 2px 2px 2px wheat;
+	position: absolute;
+	font-size: 2em;
+	width: 1000px;
+	height: 300px;
+	background-color:gray;
+	text-align: center;
+	left: 10%;
+	margin-top: 5em;
+	font-family: 'Anton';
+	color: #000;
+	border-radius: 20px;
+	background-size: 1000px 300px;
+	background-repeat: no-repeat;
+	 display: none; 
+} 
+
+
+#score {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	position: absolute;
+	font-size: 1.4em;
+	width: 200px;
+	background-color:brown;
+	left: 1em;
+	opacity: 80%;
+	margin-top: 10px;
+	padding-left: 1em;
+	font-family: 'Anton';
+	border-radius: 40px;
+	box-shadow: 4px 4px 4px #000;
+	display: block;
+	left: 60%;
+	height: auto;
+}
+
+#score p:nth-child(1) {
+	float: left;
+}
+
+#score p:nth-child(2) {
+	float: right;
+	margin-right: 2em;
+	font-size: 1.2em;
+}
+
+#submitScore {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	display: grid;
+	position: absolute;
+	font-size: 2em;
+	width: 800px;
+	padding-left: 4em;
+	padding-right: 4em;
+	padding-bottom: 1em;
+	background-color: #ccc;
+	text-align: center;
+	left: 17%;
+	margin-top: 5em;
+	font-family: 'Anton';
+	cursor: pointer;
+	box-shadow: 4px 4px 4px #000;
+	opacity: 0;
+	height: auto;
+}
+
+#submit {
+	color: white;
+	text-shadow: 2px 2px 2px #000;
+	background-color: #ccc;
+	box-shadow: 4px 4px 4px #000;
+	font-family: 'Anton';
+	font-size: 0.8em;
+	margin-top: 0.5em;
+	margin-left: 4em;
+	margin-right: 4em;
+	cursor: pointer;
+}
+
+#submit:hover {
+	border: grey 4px solid;
+}
+
+#scoreBoardValues{
+	position: relative;
+	right: 45%;
+}
+
+
+
+
+
+
+
+#headone{
+	      
+	width: 32px;
+	height: 32px;
+	background-image: url(images/head2.png);
+	margin-bottom: 0;
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: 0px -64px;
+	margin-left: 320px;
+	color: #000;
+}
+
+#link{
+	    text-decoration: none;
+		color:brown;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+#headtwo{
+	 
+	width: 32px;
+	height: 32px;
+	background-image: url(images/head.png);
+	margin-bottom: 0;
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: 0px -64px;
+	margin-left: 320px;
+	color: #000;
+}
+
+
+#headthree{
+	   
+	width: 32px;
+	height: 32px;
+	background-image: url(images/head0.png);
+	margin-bottom: 0;
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: 0px -64px;
+	margin-left: 320px;
+	color: #000;
+}
+
+
+.lifelinee{
+	position: fixed;
+     margin-left: 1000px;
+	z-index: 1000;
+	margin-top: 10px;
+	opacity: 80%;
+	background-color: brown;
+	border-radius: 40px;
+}
+
+
+#reset:hover {
+	background-color: brown;
+}
+
+
+#scoreBoardButton:hover {
+	background-color: brown;
+}
+
+
+/* .logo{
+	     background-image: url('mm.jfif');
+} */
+/* #goBackButton:hover {
+             
+} */
